@@ -15,38 +15,98 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search your word"
+            android:text="Speak Your Sentence"
             android:textSize="25dp"
             android:gravity="center"
             android:textStyle="bold"
             />
         <TextView
+            android:padding="10dp"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search your word"
-            android:id="@+id/dogri_text"
+            android:id="@+id/translated_text"
+            android:fontFamily="@font/ubuntu_light"
             android:textSize="20dp"
             android:gravity="center"
             android:textStyle="bold"
             />
 
-        <EditText
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dogri_switch"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To Dogri..."
+                android:layout_marginLeft="10dp"
+                android:textSize="20dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/kashmiri_switch"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="To Kashmari..."/>
+        </LinearLayout>
+
+
+
+
+
+
+        <!--<EditText
             android:layout_marginTop="40dp"
             android:id="@+id/edit_english"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your english text"/>
+            android:hint="Enter your english text"/>-->
 
-        <Button
+       <!-- <Button
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/srch_btn"
-            android:text="search"/>
+            android:text="search"/>-->
+
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/mic"
+            android:layout_gravity="center"
+            android:id="@+id/mic_button"/>
+
+
 
         <Button
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/add_btn"

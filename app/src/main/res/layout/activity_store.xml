@@ -8,22 +8,50 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text1"
-        android:hint="dogri"/>
+        android:id="@+id/english_txt"
+        android:hint="English........"/>
+
+
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text2"
-        android:hint="english"/>
-    <Button
+        android:id="@+id/dogri_txt"
+        android:layout_marginTop="19dp"
+        android:hint="Dogri..........."/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dogri_btn"
+            android:text="Upload Dogri"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:id="@+id/kashmiri_txt"
+            android:hint="Kashmiri..........."/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Kashmiri"
+             android:id="@+id/kashmiri_btn"/>
+
+
+        <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="store"
+            android:layout_marginTop="15dp"
         android:id="@+id/store_btn"/>
     </LinearLayout>
 
