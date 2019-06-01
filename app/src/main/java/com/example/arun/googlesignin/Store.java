@@ -1,5 +1,6 @@
 package com.example.arun.googlesignin;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -26,6 +27,7 @@ public class Store extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference mStorage = storage.getReference();
     WordsBean bean;
+    String dogri_path, kashmiri_path;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +44,14 @@ public class Store extends AppCompatActivity {
         store_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(Store.this, "Storing Data", Toast.LENGTH_LONG).show();
 
                 bean = new WordsBean();
                 bean.setDogri(dogri_txt.getText().toString().trim().toLowerCase());
                 bean.setEnglish(english_txt.getText().toString().trim().toLowerCase());
                 bean.setKashmiri(dogri_txt.getText().toString().trim().toLowerCase());
+                bean.setDogri_audio(dogri_path);
+                bean.setKashmiri_audio(kashmiri_path);
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("words");
                 bean.setId(reference.push().getKey());
                 reference.child(bean.getId()).setValue(bean)
@@ -93,33 +98,72 @@ public class Store extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode,int resultCode,Intent data){
+    protected void onActivityResult(int requestCode,int resultCode, Intent data){
+
+        System.out.println("Audio selected...............");
 
         if(requestCode == 1){
 
+
+
             if(resultCode == RESULT_OK){
+                System.out.println("Ist Audio selected...............");
 
                 //the selected audio.
                 Uri resultUri = data.getData();
+                Toast.makeText(Store.this, "Please Wait", Toast.LENGTH_LONG).show();
 
 
                 final String file_name = System.currentTimeMillis() + ".mp3";
-                final StorageReference filepath = mStorage.child("audio/dogri/"+file_name);
+                final StorageReference filepath = mStorage.child("lang_audio/dogri/"+file_name);
 
 
 
-                filepath.putFile(resultUri)//Compress Image goes here
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                filepath.putFile(resultUri)
+                //Compress Image goes here.
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        System.out.println("Ist Audio stored...............");
+
+                        StorageReference ref = mStorage.child("lang_audio/dogri/" + file_name);
+                        ref.getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+
+                                        System.out.println(uri.getPath());
+                                        dogri_path = uri.toString().trim();
+                                        Toast.makeText(Store.this, "Dogri uploaded", Toast.LENGTH_LONG).show();
+
+                                    }
+                                });
+
+                    }
+                });
+
+
+
+
+
+
+
+                       /* .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                final StorageReference ref = mStorage.child("audio/dogri/" + file_name);
+                                System.out.println("Ist Audio stored...............");
+
+                                StorageReference ref = mStorage.child("lang_audio/dogri/" + file_name);
                                 ref.getDownloadUrl()
                                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                             @RequiresApi(api = Build.VERSION_CODES.O)
                                             @Override
                                             public void onSuccess(final Uri downloadUri) {
-                                                bean.setDogri_audio(downloadUri.toString());
+                                                System.out.println(downloadUri.getPath());
+                                                dogri_path = downloadUri.getPath();
+                                                Toast.makeText(Store.this, "Dogri uploaded", Toast.LENGTH_LONG).show();
 
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
@@ -130,7 +174,7 @@ public class Store extends AppCompatActivity {
                                 });
                             }
 
-                        });
+                        });*/
 
 
 
@@ -138,39 +182,42 @@ public class Store extends AppCompatActivity {
         }
 
         else if (requestCode == 2){
+
+
             if(resultCode == RESULT_OK){
+                System.out.println("Second Audio selected...............");
 
                 //the selected audio.
                 Uri resultUri = data.getData();
+                Toast.makeText(Store.this, "Please Wait", Toast.LENGTH_LONG).show();
 
 
                 final String file_name = System.currentTimeMillis() + ".mp3";
-                final StorageReference filepath = mStorage.child("audio/kashmiri/"+file_name);
+                final StorageReference filepath = mStorage.child("lang_audio/kashmiri/"+file_name);
 
 
 
-                filepath.putFile(resultUri)//Compress Image goes here
+                filepath.putFile(resultUri)//audio goes here
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                final StorageReference ref = mStorage.child("audio/kashmiri/" + file_name);
+                                System.out.println("2nd Audio stored...............");
+
+                                StorageReference ref = mStorage.child("lang_audio/kashmiri/" + file_name);
                                 ref.getDownloadUrl()
                                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @RequiresApi(api = Build.VERSION_CODES.O)
                                             @Override
-                                            public void onSuccess(final Uri downloadUri) {
-                                                bean.setKashmiri_audio(downloadUri.toString());
+                                            public void onSuccess(Uri uri) {
+
+                                                System.out.println(uri.getPath());
+                                                kashmiri_path = uri.toString().trim();
+                                                Toast.makeText(Store.this, "Kashmiri uploaded", Toast.LENGTH_LONG).show();
 
                                             }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
+                                        });
 
-                                    }
-                                });
                             }
-
                         });
 
             }

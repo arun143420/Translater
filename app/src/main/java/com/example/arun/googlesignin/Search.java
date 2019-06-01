@@ -84,6 +84,7 @@ public class Search extends AppCompatActivity {
                     dogri_switch.setChecked(true);
                     kashmiri_switch.setChecked(false);
                     language = "dogri";
+                    System.out.println("--------------Dogri");
                 }
 
 
@@ -98,6 +99,7 @@ public class Search extends AppCompatActivity {
                     dogri_switch.setChecked(false);
                     kashmiri_switch.setChecked(true);
                     language = "kashmiri";
+                    System.out.println("--------------kasmirir");
                 }
 
 
@@ -157,13 +159,18 @@ public class Search extends AppCompatActivity {
                                 MediaPlayer mp=new MediaPlayer();
 
                                 if (language.equals("dogri")) {
+                                    flag = true;
                                     translated_text.setText(postSnapshot.child("dogri").getValue().toString());
 
+                                    System.out.println("Dogri--------------");
+
+                                    System.out.println(postSnapshot.child("dogri_audio").getValue().toString());
 
                                     try{
                                         mp.setDataSource(postSnapshot.child("dogri_audio").getValue().toString());//Write your location here
                                         mp.prepare();
                                         mp.start();
+
 
                                     }catch(Exception e){e.printStackTrace();}
 
@@ -171,8 +178,10 @@ public class Search extends AppCompatActivity {
 
 
                                 }else if (language.equals("kashmiri")){
+                                    flag = true;
 
                                     translated_text.setText(postSnapshot.child("kashmiri").getValue().toString());
+                                    System.out.println("Kasmiriiiiiii--------------");
                                     try{
                                         mp.setDataSource(postSnapshot.child("kashmiri_audio").getValue().toString());//Write your location here
                                         mp.prepare();
@@ -180,17 +189,18 @@ public class Search extends AppCompatActivity {
 
                                     }catch(Exception e){e.printStackTrace();}
                                 }
-                                flag = true;
+
 
                             }
 
                             }
                             if (flag) {
                                 Toast.makeText(Search.this, "Word Found", Toast.LENGTH_LONG).show();
+                                flag = false;
 
 
                             } else {
-                                translated_text.setText("Try Again.............");
+                                translated_text.setText("Try Again");
                                 Toast.makeText(Search.this, "Not Found", Toast.LENGTH_LONG).show();
 
 
